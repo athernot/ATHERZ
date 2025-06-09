@@ -2,14 +2,6 @@
 
 **ATHERZ** adalah aplikasi web e-commerce *full-stack* yang dibangun menggunakan Python dan Flask. Proyek ini menyediakan pengalaman berbelanja yang lengkap bagi pengguna, mulai dari melihat katalog hingga proses checkout, serta dasbor admin yang komprehensif untuk manajemen toko.
 
-## **📸 Tampilan Aplikasi**
-
-Berikut adalah beberapa contoh tampilan dari aplikasi ATHERZ:
-
-Halaman Utama
-
-Dasbor Admin
-
 ## **✨ Fitur Utama**
 
 ### **Untuk Pengguna (Pembeli)**
