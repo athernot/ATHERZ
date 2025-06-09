@@ -166,6 +166,26 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     }
+        const navbar = document.getElementById('mainNavbar');
+
+    // Pastikan elemen navbar ada sebelum menambahkan event listener
+    if (navbar) {
+        // Fungsi untuk handle scroll
+        const handleScroll = () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('navbar-scrolled');
+            } else {
+                navbar.classList.remove('navbar-scrolled');
+            }
+        };
+
+        // Tambahkan event listener saat scroll
+        window.addEventListener('scroll', handleScroll);
+
+        // Panggil sekali saat load untuk cek posisi awal (jika halaman di-refresh di tengah)
+        handleScroll();
+    }
+    
 
     // ==== TOAST NOTIFICATION FUNCTION ====
     function showToast(message, category = 'info') {

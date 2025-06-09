@@ -144,3 +144,56 @@ html[data-bs-theme="dark"] body {
 .social-icons .social-icon:hover {
     color: var(--bs-primary);
 }
+/* Atur state awal navbar */
+#mainNavbar {
+    background-color: transparent !important; /* Mulai dengan transparan */
+    transition: background-color 0.4s ease-out, box-shadow 0.4s ease-out;
+}
+
+/* State navbar saat halaman di-scroll */
+#mainNavbar.navbar-scrolled {
+    background-color: var(--bs-body-tertiary) !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+}
+
+/* Efek hover pada link menu */
+.navbar-nav .nav-link {
+    position: relative;
+    transition: transform 0.2s ease-in-out;
+}
+
+.navbar-nav .nav-link:hover {
+    transform: translateY(-2px); /* Sedikit terangkat */
+    color: var(--bs-primary);
+}
+
+/* Animasi garis bawah pada link menu */
+.navbar-nav .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 5px; /* Sesuaikan posisi garis bawah */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--bs-primary);
+    transition: width 0.3s ease-in-out;
+}
+
+.navbar-nav .nav-link:hover::after {
+    width: 60%; /* Lebar garis bawah saat hover */
+}
+
+/* Animasi untuk ikon-ikon di kanan */
+.navbar .d-flex .nav-link,
+.navbar .d-flex .btn,
+.navbar .d-flex .dropdown > button {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.navbar .d-flex .nav-link:hover,
+.navbar .d-flex .btn:hover,
+.navbar .d-flex .dropdown > button:hover {
+    transform: scale(1.1); /* Sedikit membesar */
+    box-shadow: 0 0 15px rgba(var(--bs-primary-rgb), 0.3);
+}
