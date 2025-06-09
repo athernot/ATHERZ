@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="text-center mb-5">
+        <h1 class="fw-bold">Contact Us</h1>
+        <p class="lead text-muted">We'd love to hear from you. Get in touch with us.</p>
+    </div>
+
+    <div class="row g-5">
+        <!-- Contact Form -->
+        <div class="col-lg-7">
+            <div class="card shadow-sm p-4">
+                <h4 class="mb-3">Send us a Message</h4>
+                <form method="POST" action="{{ url_for('contact') }}">
+                    {{ form.hidden_tag() }}
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            {{ form.name.label(class="form-label") }}
+                            {{ form.name(class="form-control") }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form.email.label(class="form-label") }}
+                            {{ form.email(class="form-control") }}
+                        </div>
+                        <div class="col-12">
+                            {{ form.subject.label(class="form-label") }}
+                            {{ form.subject(class="form-control") }}
+                        </div>
+                        <div class="col-12">
+                            {{ form.message.label(class="form-label") }}
+                            {{ form.message(class="form-control", rows=5) }}
+                        </div>
+                        <div class="col-12">
+                            {{ form.submit(class="btn btn-primary") }}
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Store Info & Map -->
+        <div class="col-lg-5">
+            <div class="card shadow-sm p-4 mb-4">
+                <h4 class="mb-3">Our Information</h4>
+                <ul class="list-unstyled">
+                    <li class="mb-3"><i class="bi bi-geo-alt-fill me-2 text-primary"></i>123 Fashion Street, Jakarta, 12345, Indonesia</li>
+                    <li class="mb-3"><i class="bi bi-telephone-fill me-2 text-primary"></i>+62 123 4567 890</li>
+                    <li class="mb-3"><i class="bi bi-envelope-fill me-2 text-primary"></i>support@atherz.com</li>
+                    <li class="mb-3"><i class="bi bi-clock-fill me-2 text-primary"></i>Mon - Fri: 9:00 AM - 8:00 PM</li>
+                </ul>
+            </div>
+            <div class="card shadow-sm">
+                <!-- Google Maps Embed -->
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.471969838035!2d106.8271528153488!3d-6.200788895510619!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f3e945e34b9d%3A0x5371bf0fd540de54!2sMonumen%20Nasional!5e0!3m2!1sen!2sid!4v1672824247545!5m2!1sen!2sid" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="rounded-bottom"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,98 @@
+{% extends "admin/base.html" %}
+
+{% block admin_content %}
+<div class="row">
+    <!-- Sales by Category Chart -->
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                Sales by Category
+            </div>
+            <div class="card-body">
+                {% if category_labels %}
+                    <canvas id="categoryPieChart"></canvas>
+                {% else %}
+                    <p class="text-center text-muted">No sales data available to generate this report.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Best Selling Products Table -->
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                Top 5 Best-Selling Products
+            </div>
+            <div class="card-body">
+                {% if best_selling_products %}
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Units Sold</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for product_name, units_sold in best_selling_products %}
+                                <tr>
+                                    <td>{{ product_name }}</td>
+                                    <td><span class="badge bg-success">{{ units_sold }}</span></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p class="text-center text-muted">No sales data available to generate this report.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block admin_scripts %}
+<script>
+    // Script untuk Pie Chart Kategori
+    const categoryCtx = document.getElementById('categoryPieChart');
+    if (categoryCtx) {
+        new Chart(categoryCtx, {
+            type: 'pie',
+            data: {
+                labels: {{ category_labels|tojson }},
+                datasets: [{
+                    label: 'Sales',
+                    data: {{ category_data|tojson }},
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.7)',
+                        'rgba(54, 162, 235, 0.7)',
+                        'rgba(255, 206, 86, 0.7)',
+                        'rgba(75, 192, 192, 0.7)',
+                        'rgba(153, 102, 255, 0.7)',
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Total Sales by Product Category'
+                    }
+                }
+            }
+        });
+    }
+</script>
+{% endblock %}

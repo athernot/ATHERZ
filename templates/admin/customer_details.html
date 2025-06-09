@@ -1,0 +1,74 @@
+{% extends "admin/base.html" %}
+
+{% block admin_content %}
+<div class="row mb-3">
+    <div class="col">
+        <a href="{{ url_for('admin_customers') }}" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> Back to Customers List
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Customer Profile Card -->
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="mb-0">Customer Profile</h4>
+            </div>
+            <div class="card-body">
+                <p><strong>Username:</strong> {{ customer.username }}</p>
+                <p><strong>Email:</strong> {{ customer.email }}</p>
+                <p><strong>Joined:</strong> {{ customer.created_at.strftime('%B %d, %Y') }}</p>
+                <p class="mb-0"><strong>Total Orders:</strong> <span class="badge bg-primary fs-6">{{ customer.orders.count() }}</span></p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Order History Card -->
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="mb-0">Order History</h4>
+            </div>
+            <div class="card-body">
+                {% if orders %}
+                    <div class="table-responsive">
+                        <table class="table table-sm table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Date</th>
+                                    <th>Total</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for order in orders %}
+                                    <tr>
+                                        <td>#{{ order.id }}</td>
+                                        <td>{{ order.created_at.strftime('%Y-%m-%d') }}</td>
+                                        <td>Rp {{ "%.2f"|format(order.total_amount) }}</td>
+                                        <td>
+                                            {% set status_color = {
+                                                'Pending': 'warning',
+                                                'Shipped': 'info',
+                                                'Delivered': 'success',
+                                                'Canceled': 'danger'
+                                            } %}
+                                            <span class="badge bg-{{ status_color.get(order.status, 'secondary') }}">{{ order.status }}</span>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <p class="text-center text-muted">This customer has not placed any orders yet.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

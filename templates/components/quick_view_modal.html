@@ -1,0 +1,42 @@
+<div class="modal fade" id="quickViewModal-{{ product.id }}" tabindex="-1" aria-labelledby="quickViewModalLabel-{{ product.id }}" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header border-0">
+        <h5 class="modal-title" id="quickViewModalLabel-{{ product.id }}">{{ product.name }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+            <div class="col-md-6">
+                 <img src="{{ url_for('static', filename=product.image_url) }}" class="img-fluid rounded" alt="{{ product.name }}" onerror="this.onerror=null;this.src='https://placehold.co/400x400/EAEAEA/333333?text=Image+Not+Found';">
+            </div>
+            <div class="col-md-6">
+                <h3>{{ product.name }}</h3>
+                <p class="text-muted">{{ product.category }}</p>
+                <p class="fs-4 fw-bold">Rp {{ "%.2f"|format(product.price) }}</p>
+                <p>{{ product.description }}</p>
+                <p><strong>Stock:</strong> 
+                    {% if product.stock > 10 %}
+                        <span class="badge bg-success">In Stock</span>
+                    {% elif product.stock > 0 %}
+                        <span class="badge bg-warning">Low Stock</span>
+                    {% else %}
+                         <span class="badge bg-danger">Out of Stock</span>
+                    {% endif %}
+                </p>
+                <form class="add-to-cart-form mt-3">
+                    <input type="hidden" name="product_id" value="{{ product.id }}">
+                    <div class="input-group" style="max-width: 150px;">
+                        <span class="input-group-text">Quantity</span>
+                        <input type="number" name="quantity" class="form-control" value="1" min="1" max="{{ product.stock }}">
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-3 add-to-cart-btn" {% if product.stock == 0 %}disabled{% endif %}>
+                        <i class="bi bi-cart-plus-fill"></i> Add to Cart
+                    </button>
+                </form>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

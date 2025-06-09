@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block content %}
+<header class="hero-section text-center text-white d-flex align-items-center justify-content-center mb-5">
+    <div class="container">
+        <h1 class="display-3 fw-bold hero-title">Style Redefined.</h1>
+        <p class="lead hero-subtitle">Discover the new collection that defines your personality.</p>
+        <a href="{{ url_for('catalog') }}" class="btn btn-primary btn-lg mt-3 hero-button"><i class="bi bi-bag-fill me-2"></i>Shop Now</a>
+    </div>
+</header>
+
+<!-- ===== BAGIAN YANG DIPERBAIKI ===== -->
+<section class="featured-products mb-5">
+    <h2 class="text-center fw-bold mb-4"><i class="bi bi-stars text-primary me-2"></i>Featured Products</h2>
+    <!-- Menggunakan grid Bootstrap yang benar -->
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+        {% if featured_products %}
+            {% for product in featured_products %}
+                <div class="col d-flex align-items-stretch">
+                    {% include 'components/product_card.html' %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-center">No featured products available at the moment.</p>
+        {% endif %}
+    </div>
+</section>
+<!-- ===== AKHIR BAGIAN YANG DIPERBAIKI ===== -->
+
+<section class="about-us bg-body-secondary p-5 rounded-3 mb-5">
+    <div class="row align-items-center">
+        <div class="col-md-6">
+            <h2 class="fw-bold">About ATHERZ</h2>
+            <p class="lead">We believe that fashion is more than just clothing; it's a form of self-expression. ATHERZ was born from a passion for minimalist design and high-quality materials. Our mission is to provide you with timeless pieces that are both stylish and sustainable.</p>
+            <a href="#" class="btn btn-outline-primary"><i class="bi bi-book-half me-2"></i>Learn More</a>
+        </div>
+        <div class="col-md-6 text-center mt-4 mt-md-0">
+            <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=870&auto=format&fit=crop" class="img-fluid rounded-3 shadow" alt="Tentang ATHERZ">
+        </div>
+    </div>
+</section>
+
+<section class="categories-preview mb-5">
+    <h2 class="text-center fw-bold mb-4"><i class="bi bi-grid-fill text-primary me-2"></i>Shop by Category</h2>
+    <div class="row text-center">
+        <div class="col-md-4 mb-3">
+            <div class="card bg-dark text-white category-card">
+                <img src="https://t4.ftcdn.net/jpg/10/49/32/15/360_F_1049321510_j01H3AZhok4XU7PSL0dlJOBJ7YeBdbxI.jpg" class="card-img" alt="Kategori Pakaian">
+                <div class="card-img-overlay d-flex flex-column justify-content-center align-items-center">
+                    <h3 class="card-title fw-bold">APPAREL</h3>
+                    <a href="{{ url_for('catalog', category='Baju') }}" class="btn btn-light">View Collection</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+             <div class="card bg-dark text-white category-card">
+                <img src="https://www.fashiongonerogue.com/wp-content/uploads/2023/07/Different-Types-Shoes.jpg" class="card-img" alt="Kategori Sepatu">
+                <div class="card-img-overlay d-flex flex-column justify-content-center align-items-center">
+                    <h3 class="card-title fw-bold">FOOTWEAR</h3>
+                    <a href="{{ url_for('catalog', category='Sepatu') }}" class="btn btn-light">View Collection</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+             <div class="card bg-dark text-white category-card">
+                <img src="https://www.fashiongonerogue.com/wp-content/uploads/2024/06/Different-Accessories.jpg" class="card-img" alt="Kategori Aksesoris">
+                <div class="card-img-overlay d-flex flex-column justify-content-center align-items-center">
+                    <h3 class="card-title fw-bold">ACCESSORIES</h3>
+                    <a href="{{ url_for('catalog', category='Aksesoris') }}" class="btn btn-light">View Collection</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

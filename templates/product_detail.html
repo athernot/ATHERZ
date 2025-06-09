@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row g-5">
+        <!-- Product Image -->
+        <div class="col-md-6">
+            <img src="{{ product.image_url }}" class="img-fluid rounded shadow-lg" alt="{{ product.name }}" onerror="this.onerror=null;this.src='https://placehold.co/600x600/EAEAEA/333333?text=Image+Not+Found';">
+        </div>
+
+        <!-- Product Details -->
+        <div class="col-md-6">
+            <h1 class="fw-bold">{{ product.name }}</h1>
+            <p class="text-muted">{{ product.category }}</p>
+            
+            <div class="d-flex align-items-center mb-3">
+                <div class="text-warning">
+                    {% for i in range(1, 6) %}
+                        {% if i <= product.average_rating %}<i class="bi bi-star-fill"></i>{% elif i - 0.5 <= product.average_rating %}<i class="bi bi-star-half"></i>{% else %}<i class="bi bi-star"></i>{% endif %}
+                    {% endfor %}
+                </div>
+                <span class="ms-2 text-muted">({{ "%.1f"|format(product.average_rating) }} out of 5 | {{ product.review_count }} reviews)</span>
+            </div>
+
+            <p class="fs-3 fw-bold">Rp {{ "%.2f"|format(product.price) }}</p>
+            <p>{{ product.description }}</p>
+
+            <p><strong>Availability:</strong> 
+                {% if product.stock > 10 %}<span class="badge bg-success">In Stock</span>{% elif product.stock > 0 %}<span class="badge bg-warning">Low Stock ({{ product.stock }} left)</span>{% else %}<span class="badge bg-danger">Out of Stock</span>{% endif %}
+            </p>
+            
+            <form class="add-to-cart-form mt-4">
+                <input type="hidden" name="product_id" value="{{ product.id }}">
+                <div class="input-group mb-3" style="max-width: 200px;">
+                    <span class="input-group-text">Quantity</span>
+                    <input type="number" name="quantity" class="form-control" value="1" min="1" max="{{ product.stock }}">
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg add-to-cart-btn" {% if product.stock == 0 %}disabled{% endif %}>
+                    <i class="bi bi-cart-plus-fill"></i> Add to Cart
+                </button>
+            </form>
+
+            <!-- ===== PENAMBAHAN: TOMBOL SHARE MEDIA SOSIAL ===== -->
+            <div class="mt-4">
+                <strong class="me-2">Share this product:</strong>
+                <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.url }}" target="_blank" class="btn btn-outline-secondary btn-sm" title="Share on Facebook"><i class="bi bi-facebook"></i></a>
+                <a href="https://twitter.com/intent/tweet?url={{ request.url }}&text=Check out this awesome product: {{ product.name|urlencode }}" target="_blank" class="btn btn-outline-secondary btn-sm" title="Share on Twitter"><i class="bi bi-twitter-x"></i></a>
+                <a href="https://api.whatsapp.com/send?text=Check out this awesome product: {{ product.name|urlencode }} {{ request.url }}" target="_blank" class="btn btn-outline-secondary btn-sm" title="Share on WhatsApp"><i class="bi bi-whatsapp"></i></a>
+            </div>
+            <!-- ===== AKHIR PENAMBAHAN ===== -->
+        </div>
+    </div>
+
+    <hr class="my-5">
+
+    <!-- Reviews Section -->
+    <div class="row">
+        <div class="col-md-7">
+            <h3 class="mb-4">Customer Reviews ({{ product.review_count }})</h3>
+            {% if reviews %}
+                {% for review in reviews %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <strong>{{ review.author.username }}</strong>
+                            <span class="text-muted">{{ review.created_at.strftime('%B %d, %Y') }}</span>
+                        </div>
+                         <div class="text-warning my-2">
+                            {% for i in range(review.rating) %}<i class="bi bi-star-fill"></i>{% endfor %}{% for i in range(5 - review.rating) %}<i class="bi bi-star"></i>{% endfor %}
+                        </div>
+                        <p>{{ review.comment }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p>There are no reviews for this product yet. Be the first to write one!</p>
+            {% endif %}
+        </div>
+        <div class="col-md-5">
+             <h3 class="mb-4">Write a Review</h3>
+             {% if current_user.is_authenticated %}
+                 <div class="card">
+                     <div class="card-body">
+                         <form action="{{ url_for('product_detail', product_id=product.id) }}" method="POST">
+                            {{ form.hidden_tag() }}
+                            <div class="mb-3">
+                                {{ form.rating.label(class="form-label") }}
+                                {{ form.rating(class="form-select") }}
+                            </div>
+                             <div class="mb-3">
+                                {{ form.comment.label(class="form-label") }}
+                                {{ form.comment(class="form-control", rows=4) }}
+                            </div>
+                            {{ form.submit(class="btn btn-primary") }}
+                         </form>
+                     </div>
+                 </div>
+             {% else %}
+                <div class="alert alert-info">
+                    You must be <a href="{{ url_for('login', next=request.url) }}">logged in</a> to write a review.
+                </div>
+             {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

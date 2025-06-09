@@ -1,0 +1,146 @@
+/*
+ * File: style.css
+ * Description: Stylesheet kustom untuk ATHERZ E-commerce
+ * Palette: Sage Green
+ */
+
+/* ==== GOOGLE FONT: INTER ==== */
+body {
+    font-family: 'Inter', sans-serif;
+    /* PERBAIKAN: Transisi dipindahkan ke sini untuk kontrol yang lebih baik */
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* ==== PALET WARNA SAGE GREEN UTAMA ==== */
+:root {
+    --bs-primary: #6A8E7F;
+    --bs-primary-rgb: 106, 142, 127;
+    --bs-secondary-color: #5b6862;
+    --bs-body-bg: #F5F5F0; /* Cream background yang sedikit lebih cerah */
+    --bs-body-color: #3a3f3d;
+    --bs-link-hover-color: #597a6d;
+}
+
+/* Penyesuaian Komponen Bootstrap dengan Palet Baru */
+.btn-primary {
+    --bs-btn-bg: var(--bs-primary);
+    --bs-btn-border-color: var(--bs-primary);
+    --bs-btn-hover-bg: #597a6d;
+    --bs-btn-hover-border-color: #597a6d;
+    --bs-btn-active-bg: #527064;
+    --bs-btn-active-border-color: #527064;
+    --bs-btn-focus-shadow-rgb: var(--bs-primary-rgb);
+}
+
+.btn-outline-primary {
+    --bs-btn-color: var(--bs-primary);
+    --bs-btn-border-color: var(--bs-primary);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: var(--bs-primary);
+    --bs-btn-hover-border-color: var(--bs-primary);
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: var(--bs-primary);
+    --bs-btn-active-border-color: var(--bs-primary);
+    --bs-btn-focus-shadow-rgb: var(--bs-primary-rgb);
+}
+
+.badge.bg-primary { background-color: var(--bs-primary) !important; }
+.text-primary { color: var(--bs-primary) !important; }
+a { color: var(--bs-primary); }
+a:hover { color: var(--bs-link-hover-color); }
+
+.form-control:focus {
+    border-color: #a3b8af;
+    box-shadow: 0 0 0 0.25rem rgba(106, 142, 127, 0.25);
+}
+
+.accordion-button:not(.collapsed) {
+    color: #3e5249;
+    background-color: rgba(106, 142, 127, 0.1);
+}
+.accordion-button:focus {
+    box-shadow: 0 0 0 0.25rem rgba(106, 142, 127, 0.25);
+}
+.list-group-item.active {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+}
+
+/* Penyesuaian Dark Mode dengan tema sage */
+html[data-bs-theme="dark"] {
+    --bs-body-bg: #2c332f;
+    --bs-body-color: #E6E6D8;
+    --bs-secondary-bg: #3a453e;
+    --bs-tertiary-bg: #3a453e;
+    --bs-border-color: #4a554c;
+    --bs-light-subtle: #3a453e;
+    --bs-dark-emphasis: #E6E6D8;
+    color-scheme: dark; /* Memberitahu browser untuk menggunakan UI gelap default */
+}
+html[data-bs-theme="dark"] .card {
+    background-color: #3a453e;
+    border-color: #4a554c;
+}
+
+/* PERBAIKAN: Mencegah flash putih dengan menetapkan warna dasar untuk tag html */
+html[data-bs-theme="dark"] body {
+    background-color: var(--bs-body-bg);
+}
+
+/* ==== HERO SECTION ==== */
+.hero-section {
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=2070&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+    min-height: 60vh;
+    border-radius: 1rem;
+}
+
+/* ==== KARTU PRODUK ==== */
+.product-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+.product-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 1rem 3rem rgba(0,0,0,.1)!important;
+}
+.product-card-img {
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+}
+
+/* ==== TOMBOL WISHLIST ==== */
+.wishlist-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ccc;
+    font-size: 1.2rem;
+    transition: color 0.2s ease, background-color 0.2s ease;
+}
+.wishlist-btn:hover { color: #ff4d4d; background-color: rgba(255, 255, 255, 0.9); }
+.wishlist-btn.active { color: #ff4d4d; }
+.detail-wishlist-btn { top: 15px; right: 15px; }
+
+
+/* ==== IKON SOSIAL MEDIA DI FOOTER (Gaya Baru) ==== */
+.social-icons .social-icon {
+    font-size: 1.5rem;
+    color: var(--bs-secondary-color);
+    margin-right: 1.25rem;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+.social-icons .social-icon:hover {
+    color: var(--bs-primary);
+}

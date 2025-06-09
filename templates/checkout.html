@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center fw-bold mb-4">Checkout</h2>
+    <div class="row g-5">
+        <!-- Order Summary -->
+        <div class="col-md-5 col-lg-4 order-md-last">
+            <h4 class="d-flex justify-content-between align-items-center mb-3">
+                <span class="text-primary">Your cart</span>
+                <span class="badge bg-primary rounded-pill">{{ cart_items|length }}</span>
+            </h4>
+            <ul class="list-group mb-3">
+                {% for item in cart_items %}
+                <li class="list-group-item d-flex justify-content-between lh-sm">
+                    <div>
+                        <h6 class="my-0">{{ item.product_details.name }}</h6>
+                        <small class="text-muted">Qty: {{ item.quantity }}</small>
+                    </div>
+                    <span class="text-muted">Rp {{ "%.2f"|format(item.product_details.price * item.quantity) }}</span>
+                </li>
+                {% endfor %}
+                <li class="list-group-item d-flex justify-content-between bg-body-tertiary">
+                    <span class="fw-bold">Total (IDR)</span>
+                    <strong>Rp {{ "%.2f"|format(total_price) }}</strong>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- Checkout Form -->
+        <div class="col-md-7 col-lg-8">
+            <h4 class="mb-3">Shipping Address</h4>
+            <form method="POST" action="{{ url_for('checkout') }}" class="needs-validation" novalidate>
+                {{ form.hidden_tag() }}
+                <div class="row g-3">
+                    <div class="col-12">
+                        {{ form.fullname.label(class="form-label") }}
+                        {{ form.fullname(class="form-control", placeholder="John Doe") }}
+                    </div>
+                    <div class="col-12">
+                        {{ form.email.label(class="form-label") }}
+                        {{ form.email(class="form-control", placeholder="you@example.com") }}
+                    </div>
+                    <div class="col-12">
+                        {{ form.phone.label(class="form-label") }}
+                        {{ form.phone(class="form-control", placeholder="+62 123 4567 890") }}
+                    </div>
+                    <div class="col-12">
+                        {{ form.address.label(class="form-label") }}
+                        {{ form.address(class="form-control", placeholder="1234 Main St", rows=3) }}
+                    </div>
+                    <div class="col-md-5">
+                        {{ form.city.label(class="form-label") }}
+                        {{ form.city(class="form-control") }}
+                    </div>
+                    <div class="col-md-4">
+                        {{ form.country.label(class="form-label") }}
+                        {{ form.country(class="form-control") }}
+                    </div>
+                    <div class="col-md-3">
+                        {{ form.zipcode.label(class="form-label") }}
+                        {{ form.zipcode(class="form-control") }}
+                    </div>
+                </div>
+
+                <hr class="my-4">
+
+                <h4 class="mb-3">Payment</h4>
+                {{ form.payment_method.label(class="form-label") }}
+                {{ form.payment_method(class="form-select") }}
+
+                <hr class="my-4">
+
+                {{ form.submit(class="w-100 btn btn-primary btn-lg") }}
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

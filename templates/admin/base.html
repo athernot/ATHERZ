@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} | ATHERZ Admin</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- ===== PERBAIKAN: CSS KUSTOM UNTUK TATA LETAK HEADER ===== -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f7fc;
+        }
+        .sidebar {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            padding-top: 60px; /* Menyesuaikan dengan tinggi header */
+            background-color: #ffffff;
+            border-right: 1px solid #e2e8f0;
+        }
+        .sidebar-sticky {
+            padding-top: 1rem;
+        }
+        .admin-header {
+            height: 60px; /* Menetapkan tinggi header */
+            background-color: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 0 1.5rem; /* Menambah padding horizontal */
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* Mendorong elemen ke tepi */
+        }
+        .navbar-brand {
+            color: #1a202c;
+            font-weight: 700;
+            margin-right: auto; /* Mendorong elemen lain ke kanan */
+        }
+        .sidebar .nav-link {
+            font-weight: 500;
+            color: #4a5568;
+            padding: 0.75rem 1.5rem;
+            margin: 0.25rem 0;
+            border-radius: 0.5rem;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+        .sidebar .nav-link .bi {
+            margin-right: 12px;
+            font-size: 1.1rem;
+            vertical-align: middle;
+        }
+        .sidebar .nav-link:hover {
+            background-color: #e2e8f0;
+            color: #2d3748;
+        }
+        .sidebar .nav-link.active {
+            background-color: #0d6efd;
+            color: #ffffff;
+            font-weight: 600;
+        }
+        .main-content {
+            margin-left: 250px;
+            padding: 2rem;
+            padding-top: 80px; /* Menambah ruang dari header */
+        }
+        .stat-card {
+            border-radius: 0.75rem;
+            border: none;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .stat-card .card-body {
+            display: flex;
+            align-items: center;
+            padding: 1.5rem;
+        }
+        .stat-card .icon-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1.5rem;
+            font-size: 1.5rem;
+            color: #fff;
+            flex-shrink: 0;
+        }
+        .stat-card .stat-text h6 {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #6c757d;
+        }
+        .stat-card .stat-text h4 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #212529;
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== PERBAIKAN: Struktur HTML Header Disederhanakan ===== -->
+    <header class="navbar sticky-top admin-header">
+        <div class="d-flex align-items-center">
+            <a class="navbar-brand" href="{{ url_for('admin_dashboard') }}">ATHERZ Admin</a>
+        </div>
+        <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="d-flex align-items-center">
+            <a class="nav-link text-dark me-3" href="{{ url_for('home') }}" target="_blank">
+                <i class="bi bi-shop"></i> View Site
+            </a>
+            <a class="nav-link text-dark" href="{{ url_for('logout') }}">
+                <i class="bi bi-box-arrow-right"></i> Sign out
+            </a>
+        </div>
+    </header>
+
+    <div class="container-fluid">
+        <div class="row">
+            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar collapse">
+                <div class="position-sticky pt-3 sidebar-sticky px-3">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.endpoint == 'admin_dashboard' %}active{% endif %}" href="{{ url_for('admin_dashboard') }}">
+                                <i class="bi bi-grid-1x2-fill"></i>Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if 'product' in request.endpoint %}active{% endif %}" href="{{ url_for('admin_products') }}">
+                                <i class="bi bi-box-seam-fill"></i>Products
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if 'order' in request.endpoint %}active{% endif %}" href="{{ url_for('admin_orders') }}">
+                                <i class="bi bi-receipt"></i>Orders
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if 'customer' in request.endpoint %}active{% endif %}" href="{{ url_for('admin_customers') }}">
+                                <i class="bi bi-people-fill"></i>Customers
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if 'report' in request.endpoint %}active{% endif %}" href="{{ url_for('admin_reports') }}">
+                                <i class="bi bi-bar-chart-line-fill"></i>Reports
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <main class="main-content col-md-9 ms-sm-auto col-lg-10">
+                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4 border-bottom">
+                    <h1 class="h2">{{ title }}</h1>
+                </div>
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                {% block admin_content %}{% endblock %}
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    {% block admin_scripts %}{% endblock %}
+</body>
+</html>

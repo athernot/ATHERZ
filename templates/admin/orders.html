@@ -1,0 +1,82 @@
+{% extends "admin/base.html" %}
+
+{% block admin_content %}
+<div class="card">
+    <div class="card-header">
+        <h3 class="mb-0">All Orders</h3>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Date</th>
+                        <th>Total Amount</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders.items %}
+                    <tr>
+                        <td>#{{ order.id }}</td>
+                        <td>{{ order.customer.username }}</td>
+                        <td>{{ order.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                        <td>Rp {{ "%.2f"|format(order.total_amount) }}</td>
+                        <td>
+                            {% set status_color = {
+                                'Pending': 'warning',
+                                'Shipped': 'info',
+                                'Delivered': 'success',
+                                'Canceled': 'danger'
+                            } %}
+                            <span class="badge bg-{{ status_color.get(order.status, 'secondary') }}">{{ order.status }}</span>
+                        </td>
+                        <td>
+                            <!-- Form untuk update status -->
+                            <form action="{{ url_for('update_order_status', order_id=order.id) }}" method="POST" class="d-inline-flex">
+                                <select name="status" class="form-select form-select-sm" style="width: 120px;">
+                                    <option value="Pending" {% if order.status == 'Pending' %}selected{% endif %}>Pending</option>
+                                    <option value="Shipped" {% if order.status == 'Shipped' %}selected{% endif %}>Shipped</option>
+                                    <option value="Delivered" {% if order.status == 'Delivered' %}selected{% endif %}>Delivered</option>
+                                    <option value="Canceled" {% if order.status == 'Canceled' %}selected{% endif %}>Canceled</option>
+                                </select>
+                                <button type="submit" class="btn btn-primary btn-sm ms-2">Update</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="6" class="text-center">No orders found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card-footer">
+        <!-- Pagination -->
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center mb-0">
+                <li class="page-item {% if not orders.has_prev %}disabled{% endif %}">
+                    <a class="page-link" href="{{ url_for('admin_orders', page=orders.prev_num) }}">Previous</a>
+                </li>
+                {% for page_num in orders.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+                    {% if page_num %}
+                        <li class="page-item {% if page_num == orders.page %}active{% endif %}">
+                            <a class="page-link" href="{{ url_for('admin_orders', page=page_num) }}">{{ page_num }}</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled"><span class="page-link">…</span></li>
+                    {% endif %}
+                {% endfor %}
+                <li class="page-item {% if not orders.has_next %}disabled{% endif %}">
+                    <a class="page-link" href="{{ url_for('admin_orders', page=orders.next_num) }}">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+{% endblock %}

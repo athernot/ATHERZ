@@ -1,0 +1,107 @@
+{% extends "admin/base.html" %}
+
+{% block admin_content %}
+<!-- ===== PERBAIKAN: Kartu Statistik dengan Desain dan Struktur Baru ===== -->
+<div class="row">
+    <div class="col-lg-3 col-md-6 mb-4">
+        <div class="card stat-card">
+            <div class="card-body">
+                <div class="icon-circle bg-primary">
+                    <i class="bi bi-currency-dollar"></i>
+                </div>
+                <div class="stat-text">
+                    <h6 class="mb-1">Total Sales</h6>
+                    <h4 class="mb-0">Rp{{ "%.2f"|format(total_sales) }}</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 mb-4">
+        <div class="card stat-card">
+            <div class="card-body">
+                <div class="icon-circle bg-success">
+                    <i class="bi bi-cart-check-fill"></i>
+                </div>
+                <div class="stat-text">
+                    <h6 class="mb-1">Total Orders</h6>
+                    <h4 class="mb-0">{{ total_orders }}</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 mb-4">
+        <div class="card stat-card">
+            <div class="card-body">
+                <div class="icon-circle bg-info">
+                    <i class="bi bi-box-seam-fill"></i>
+                </div>
+                <div class="stat-text">
+                    <h6 class="mb-1">Total Products</h6>
+                    <h4 class="mb-0">{{ total_products }}</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 mb-4">
+        <div class="card stat-card">
+            <div class="card-body">
+                <div class="icon-circle bg-warning">
+                    <i class="bi bi-people-fill"></i>
+                </div>
+                <div class="stat-text">
+                    <h6 class="mb-1">Total Customers</h6>
+                    <h4 class="mb-0">{{ total_customers }}</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sales Chart -->
+<div class="card mt-4 stat-card">
+    <div class="card-header bg-white border-0 pt-3">
+        <h5>Sales Overview (Last 7 Days)</h5>
+    </div>
+    <div class="card-body">
+        <canvas id="salesChart"></canvas>
+    </div>
+</div>
+{% endblock %}
+
+{% block admin_scripts %}
+<script>
+    const ctx = document.getElementById('salesChart');
+    if (ctx) {
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: {{ chart_labels | tojson | safe }},
+                datasets: [{
+                    label: 'Sales (IDR)',
+                    data: {{ chart_data | tojson | safe }},
+                    fill: true,
+                    backgroundColor: 'rgba(13, 110, 253, 0.1)',
+                    borderColor: 'rgba(13, 110, 253, 1)',
+                    tension: 0.3,
+                    pointBackgroundColor: 'rgba(13, 110, 253, 1)',
+                    pointRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+    }
+</script>
+{% endblock %}
