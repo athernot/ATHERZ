@@ -1,27 +1,18 @@
-/*
- * File: style.css
- * Description: Stylesheet kustom untuk ATHERZ E-commerce
- * Palette: Sage Green
- */
-
-/* ==== GOOGLE FONT: INTER ==== */
 body {
     font-family: 'Inter', sans-serif;
-    /* PERBAIKAN: Transisi dipindahkan ke sini untuk kontrol yang lebih baik */
     transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-/* ==== PALET WARNA SAGE GREEN UTAMA ==== */
+
 :root {
     --bs-primary: #6A8E7F;
     --bs-primary-rgb: 106, 142, 127;
     --bs-secondary-color: #5b6862;
-    --bs-body-bg: #F5F5F0; /* Cream background yang sedikit lebih cerah */
+    --bs-body-bg: #F5F5F0; 
     --bs-body-color: #3a3f3d;
     --bs-link-hover-color: #597a6d;
 }
 
-/* Penyesuaian Komponen Bootstrap dengan Palet Baru */
 .btn-primary {
     --bs-btn-bg: var(--bs-primary);
     --bs-btn-border-color: var(--bs-primary);
@@ -66,7 +57,6 @@ a:hover { color: var(--bs-link-hover-color); }
     border-color: var(--bs-primary);
 }
 
-/* Penyesuaian Dark Mode dengan tema sage */
 html[data-bs-theme="dark"] {
     --bs-body-bg: #2c332f;
     --bs-body-color: #E6E6D8;
@@ -75,19 +65,17 @@ html[data-bs-theme="dark"] {
     --bs-border-color: #4a554c;
     --bs-light-subtle: #3a453e;
     --bs-dark-emphasis: #E6E6D8;
-    color-scheme: dark; /* Memberitahu browser untuk menggunakan UI gelap default */
+    color-scheme: dark; 
 }
 html[data-bs-theme="dark"] .card {
     background-color: #3a453e;
     border-color: #4a554c;
 }
 
-/* PERBAIKAN: Mencegah flash putih dengan menetapkan warna dasar untuk tag html */
 html[data-bs-theme="dark"] body {
     background-color: var(--bs-body-bg);
 }
 
-/* ==== HERO SECTION ==== */
 .hero-section {
     background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=2070&auto=format&fit=crop');
     background-size: cover;
@@ -96,7 +84,6 @@ html[data-bs-theme="dark"] body {
     border-radius: 1rem;
 }
 
-/* ==== KARTU PRODUK ==== */
 .product-card {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     position: relative;
@@ -111,7 +98,6 @@ html[data-bs-theme="dark"] body {
     object-fit: cover;
 }
 
-/* ==== TOMBOL WISHLIST ==== */
 .wishlist-btn {
     position: absolute;
     top: 10px;
@@ -133,7 +119,6 @@ html[data-bs-theme="dark"] body {
 .detail-wishlist-btn { top: 15px; right: 15px; }
 
 
-/* ==== IKON SOSIAL MEDIA DI FOOTER (Gaya Baru) ==== */
 .social-icons .social-icon {
     font-size: 1.5rem;
     color: var(--bs-secondary-color);
@@ -144,36 +129,32 @@ html[data-bs-theme="dark"] body {
 .social-icons .social-icon:hover {
     color: var(--bs-primary);
 }
-/* Atur state awal navbar */
 #mainNavbar {
-    background-color: transparent !important; /* Mulai dengan transparan */
+    background-color: transparent !important; 
     transition: background-color 0.4s ease-out, box-shadow 0.4s ease-out;
 }
 
-/* State navbar saat halaman di-scroll */
 #mainNavbar.navbar-scrolled {
     background-color: var(--bs-body-tertiary) !important;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
 }
 
-/* Efek hover pada link menu */
 .navbar-nav .nav-link {
     position: relative;
     transition: transform 0.2s ease-in-out;
 }
 
 .navbar-nav .nav-link:hover {
-    transform: translateY(-2px); /* Sedikit terangkat */
+    transform: translateY(-2px); 
     color: var(--bs-primary);
 }
 
-/* Animasi garis bawah pada link menu */
 .navbar-nav .nav-link::after {
     content: '';
     position: absolute;
     width: 0;
     height: 2px;
-    bottom: 5px; /* Sesuaikan posisi garis bawah */
+    bottom: 5px; 
     left: 50%;
     transform: translateX(-50%);
     background-color: var(--bs-primary);
@@ -181,10 +162,9 @@ html[data-bs-theme="dark"] body {
 }
 
 .navbar-nav .nav-link:hover::after {
-    width: 60%; /* Lebar garis bawah saat hover */
+    width: 60%; 
 }
 
-/* Animasi untuk ikon-ikon di kanan */
 .navbar .d-flex .nav-link,
 .navbar .d-flex .btn,
 .navbar .d-flex .dropdown > button {
@@ -194,6 +174,6 @@ html[data-bs-theme="dark"] body {
 .navbar .d-flex .nav-link:hover,
 .navbar .d-flex .btn:hover,
 .navbar .d-flex .dropdown > button:hover {
-    transform: scale(1.1); /* Sedikit membesar */
+    transform: scale(1.1); 
     box-shadow: 0 0 15px rgba(var(--bs-primary-rgb), 0.3);
 }

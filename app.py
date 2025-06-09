@@ -478,7 +478,6 @@ if __name__ == '__main__':
         if Product.query.count() == 0:
             print("Database is empty. Seeding initial data with correct image URLs...")
             
-            # Membersihkan data lama
             Wishlist.query.delete()
             Review.query.delete()
             OrderItem.query.delete()
@@ -493,7 +492,6 @@ if __name__ == '__main__':
                 admin_user.set_password('admin123')
                 db.session.add(admin_user)
             
-            # ===== DATA GAMBAR FINAL YANG BENAR =====
             products_data = [
                 {'name': 'Modern Cotton Hoodie', 'description': 'A comfortable and stylish hoodie made from 100% premium cotton.', 'price': 75.00, 'category': 'Baju', 'stock': 50, 'image_url': 'https://images.unsplash.com/photo-1556157382-97eda2d62296?q=80&w=870&auto=format&fit=crop'},
                 {'name': 'Classic White Sneakers', 'description': 'Versatile and timeless white sneakers that match any outfit.', 'price': 120.00, 'category': 'Sepatu', 'stock': 30, 'image_url': 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?q=80&w=774&auto=format&fit=crop'},

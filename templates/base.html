@@ -1,13 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" class="light"> <!-- Mulai dengan kelas light sebagai fallback -->
+<html lang="en" class="light"> 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }} - ATHERZ</title>
     
-    <!-- ===== PERBAIKAN: Skrip Anti-Flash Ditempatkan di Head ===== -->
     <script>
-        // Skrip ini berjalan secepat mungkin untuk mencegah kilatan putih.
         (function() {
             try {
                 var theme = localStorage.getItem('atherz_theme');
@@ -21,11 +19,9 @@
                     document.documentElement.classList.add('light');
                 }
             } catch (e) {
-                // Abaikan error jika localStorage tidak tersedia
             }
         })();
     </script>
-    <!-- ===== AKHIR SKRIP ANTI-FLASH ===== -->
 
     <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -101,14 +97,12 @@
                 <div class="col-lg-4 col-md-12 mb-4 mb-md-0">
                     <h5 class="text-uppercase fw-bold">ATHERZ</h5>
                     <p>Modern fashion for the modern soul. Discover your style with our curated collection of high-quality apparel and accessories.</p>
-                    <!-- ===== PENAMBAHAN: IKON MEDIA SOSIAL ===== -->
                     <div class="mt-4">
                         <a href="#" class="btn btn-outline-primary btn-floating m-1" role="button"><i class="bi bi-facebook"></i></a>
                         <a href="#" class="btn btn-outline-primary btn-floating m-1" role="button"><i class="bi bi-twitter-x"></i></a>
                         <a href="#" class="btn btn-outline-primary btn-floating m-1" role="button"><i class="bi bi-instagram"></i></a>
                         <a href="#" class="btn btn-outline-primary btn-floating m-1" role="button"><i class="bi bi-tiktok"></i></a>
                     </div>
-                    <!-- ===== AKHIR PENAMBAHAN ===== -->
                 </div>
                 <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
                     <h5 class="text-uppercase">Links</h5>

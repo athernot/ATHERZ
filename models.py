@@ -5,7 +5,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 db = SQLAlchemy()
 
-# PENAMBAHAN: Model baru untuk Wishlist
 class Wishlist(db.Model):
     __tablename__ = 'wishlist'
     id = db.Column(db.Integer, primary_key=True)
@@ -14,7 +13,6 @@ class Wishlist(db.Model):
     product = db.relationship('Product')
 
 class User(UserMixin, db.Model):
-    """Model untuk pengguna."""
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True, nullable=False)
@@ -26,7 +24,6 @@ class User(UserMixin, db.Model):
     orders = db.relationship('Order', backref='customer', lazy='dynamic')
     cart_items = db.relationship('Cart', backref='user', lazy='dynamic')
     reviews = db.relationship('Review', backref='author', lazy='dynamic')
-    # PENAMBAHAN: Relasi untuk Wishlist
     wishlist_items = db.relationship('Wishlist', backref='user', lazy='dynamic', cascade="all, delete-orphan")
 
     def set_password(self, password):
@@ -39,7 +36,6 @@ class User(UserMixin, db.Model):
         return f'<User {self.username}>'
 
 class Product(db.Model):
-    """Model untuk produk."""
     __tablename__ = 'products'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), nullable=False)
@@ -69,7 +65,6 @@ class Product(db.Model):
         return f'<Product {self.name}>'
 
 class Order(db.Model):
-    """Model untuk pesanan."""
     __tablename__ = 'orders'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
@@ -80,7 +75,6 @@ class Order(db.Model):
     items = db.relationship('OrderItem', backref='order', lazy='dynamic', cascade="all, delete-orphan")
 
 class OrderItem(db.Model):
-    """Model untuk item dalam pesanan."""
     __tablename__ = 'order_items'
     id = db.Column(db.Integer, primary_key=True)
     order_id = db.Column(db.Integer, db.ForeignKey('orders.id'), nullable=False)
@@ -89,7 +83,6 @@ class OrderItem(db.Model):
     price = db.Column(db.Float, nullable=False)
 
 class Cart(db.Model):
-    """Model untuk keranjang belanja."""
     __tablename__ = 'cart'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
@@ -98,7 +91,6 @@ class Cart(db.Model):
     product_details = db.relationship('Product')
         
 class Contact(db.Model):
-    """Model untuk pesan kontak."""
     __tablename__ = 'contact'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
@@ -108,7 +100,6 @@ class Contact(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
 class Review(db.Model):
-    """Model untuk review produk."""
     __tablename__ = 'reviews'
     id = db.Column(db.Integer, primary_key=True)
     product_id = db.Column(db.Integer, db.ForeignKey('products.id'), nullable=False)

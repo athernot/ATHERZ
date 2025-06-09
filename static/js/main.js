@@ -1,16 +1,8 @@
-/**
- * File: main.js
- * Description: Skrip JavaScript utama untuk ATHERZ E-commerce.
- * Author: Gemini
- */
-
 document.addEventListener('DOMContentLoaded', function() {
 
-    // ==== DARK MODE TOGGLE ====
     const darkModeToggle = document.getElementById('darkModeToggle');
     const htmlElement = document.documentElement;
 
-    // Fungsi untuk menerapkan tema berdasarkan preferensi yang tersimpan
     const applyTheme = (theme) => {
         htmlElement.setAttribute('data-bs-theme', theme);
         if (darkModeToggle) {
@@ -18,11 +10,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
     
-    // Cek tema yang tersimpan di localStorage saat halaman dimuat
     const savedTheme = localStorage.getItem('atherz_theme') || 'light';
     applyTheme(savedTheme);
 
-    // Event listener untuk tombol toggle
     if (darkModeToggle) {
         darkModeToggle.addEventListener('click', () => {
             const currentTheme = htmlElement.getAttribute('data-bs-theme');
@@ -32,11 +22,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // ==== AJAX ADD TO CART ====
     const addToCartForms = document.querySelectorAll('.add-to-cart-form');
     addToCartForms.forEach(form => {
         form.addEventListener('submit', function(event) {
-            event.preventDefault(); // Mencegah form submit standar
+            event.preventDefault(); 
 
             const formData = new FormData(this);
             const productId = formData.get('product_id');
@@ -44,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             fetch(`/add_to_cart/${productId}`, {
                 method: 'POST',
-                body: new URLSearchParams({ quantity: quantity }), // Kirim data sebagai form-urlencoded
+                body: new URLSearchParams({ quantity: quantity }), 
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
@@ -52,10 +41,8 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    // Tampilkan toast notifikasi sukses
                     showToast(data.message, 'success');
                     
-                    // Update jumlah item di badge keranjang
                     const cartBadge = document.getElementById('cart-count-badge');
                     if (cartBadge) {
                         cartBadge.textContent = data.cart_count;
@@ -63,7 +50,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         setTimeout(() => cartBadge.classList.remove('animate-pop'), 300);
                     }
                     
-                    // Tutup modal jika ada
                     const modal = this.closest('.modal');
                     if (modal) {
                         const modalInstance = bootstrap.Modal.getInstance(modal);
@@ -71,7 +57,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
 
                 } else {
-                    // Tampilkan toast notifikasi error
                     showToast(data.message || 'An error occurred.', 'danger');
                 }
             })
@@ -81,7 +66,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     });
-    // ===== LOGIKA BARU UNTUK LIVE SEARCH =====
     const searchInput = document.getElementById('live-search-input');
     const searchResultsContainer = document.getElementById('live-search-results');
 
@@ -98,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
             fetch(`/live_search?query=${query}`)
                 .then(response => response.json())
                 .then(data => {
-                    searchResultsContainer.innerHTML = ''; // Kosongkan hasil sebelumnya
+                    searchResultsContainer.innerHTML = ''; 
                     if (data.length > 0) {
                         searchResultsContainer.style.display = 'block';
                         data.forEach(product => {
@@ -123,14 +107,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
         });
 
-        // Sembunyikan hasil pencarian saat mengklik di luar
         document.addEventListener('click', function(event) {
             if (!searchResultsContainer.contains(event.target) && event.target !== searchInput) {
                 searchResultsContainer.innerHTML = '';
                 searchResultsContainer.style.display = 'none';
             }
         });
-        // ===== LOGIKA BARU UNTUK WISHLIST =====
     document.body.addEventListener('click', function(event) {
         const wishlistButton = event.target.closest('.wishlist-btn');
         if (wishlistButton) {
@@ -142,9 +124,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 headers: { 'Content-Type': 'application/json' }
             })
             .then(response => {
-                if(response.status === 401){ // Jika pengguna belum login
+                if(response.status === 401){ 
                     window.location.href = '/login';
-                    return null; // Hentikan proses
+                    return null; 
                 }
                 return response.json();
             })
@@ -155,7 +137,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         wishlistButton.classList.add('active');
                     } else {
                         wishlistButton.classList.remove('active');
-                        // Jika di halaman wishlist, hapus kartu produknya
                         if(window.location.pathname.includes('/profile/wishlist')) {
                             wishlistButton.closest('.col').remove();
                         }
@@ -168,9 +149,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
         const navbar = document.getElementById('mainNavbar');
 
-    // Pastikan elemen navbar ada sebelum menambahkan event listener
     if (navbar) {
-        // Fungsi untuk handle scroll
         const handleScroll = () => {
             if (window.scrollY > 50) {
                 navbar.classList.add('navbar-scrolled');
@@ -179,27 +158,21 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         };
 
-        // Tambahkan event listener saat scroll
         window.addEventListener('scroll', handleScroll);
-
-        // Panggil sekali saat load untuk cek posisi awal (jika halaman di-refresh di tengah)
         handleScroll();
     }
     
 
-    // ==== TOAST NOTIFICATION FUNCTION ====
     function showToast(message, category = 'info') {
-        // Hapus toast lama jika ada
         const oldToastContainer = document.getElementById('toast-container');
         if(oldToastContainer) {
             oldToastContainer.remove();
         }
 
-        // Buat container toast baru
         const toastContainer = document.createElement('div');
         toastContainer.id = 'toast-container';
         toastContainer.className = 'position-fixed top-0 end-0 p-3';
-        toastContainer.style.zIndex = '1056'; // Di atas modal
+        toastContainer.style.zIndex = '1056'; 
 
         const toastHTML = `
             <div class="toast show align-items-center text-bg-${category} border-0" role="alert" aria-live="assertive" aria-atomic="true">

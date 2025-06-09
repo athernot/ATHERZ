@@ -5,14 +5,12 @@ from models import User
 from flask_login import current_user
 
 class LoginForm(FlaskForm):
-    """Formulir untuk login pengguna."""
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     remember_me = BooleanField('Remember Me')
     submit = SubmitField('Sign In')
 
 class RegistrationForm(FlaskForm):
-    """Formulir untuk registrasi pengguna baru."""
     username = StringField('Username', validators=[DataRequired(), Length(min=3, max=64)])
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired(), Length(min=6)])
@@ -31,7 +29,6 @@ class RegistrationForm(FlaskForm):
             raise ValidationError('That email is taken. Please choose a different one.')
 
 class ContactForm(FlaskForm):
-    """Formulir untuk halaman kontak."""
     name = StringField('Name', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
     subject = StringField('Subject', validators=[DataRequired()])
@@ -39,7 +36,6 @@ class ContactForm(FlaskForm):
     submit = SubmitField('Send Message')
 
 class CheckoutForm(FlaskForm):
-    """Formulir untuk proses checkout."""
     fullname = StringField('Full Name', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
     phone = StringField('Phone Number', validators=[DataRequired()])
@@ -55,7 +51,6 @@ class CheckoutForm(FlaskForm):
     submit = SubmitField('Place Order')
 
 class ProductForm(FlaskForm):
-    """Formulir untuk menambah/mengedit produk (Admin)."""
     name = StringField('Product Name', validators=[DataRequired()])
     description = TextAreaField('Description', validators=[DataRequired()])
     price = StringField('Price', validators=[DataRequired()])
@@ -69,21 +64,17 @@ class ProductForm(FlaskForm):
     submit = SubmitField('Save Product')
 
 class SearchForm(FlaskForm):
-    """Formulir untuk pencarian produk."""
     search_query = StringField('Search', validators=[DataRequired()])
     submit = SubmitField('Search')
 
 class ReviewForm(FlaskForm):
-    """Formulir untuk ulasan produk."""
     rating = SelectField('Your Rating', 
                          choices=[('5', '5 - Excellent'), ('4', '4 - Very Good'), ('3', '3 - Good'), ('2', '2 - Fair'), ('1', '1 - Poor')], 
                          validators=[DataRequired()])
     comment = TextAreaField('Your Review', validators=[DataRequired(), Length(min=10, max=500)])
     submit = SubmitField('Submit Review')
 
-# ===== FORM BARU UNTUK PROFIL PENGGUNA =====
 class UpdateAccountForm(FlaskForm):
-    """Formulir untuk memperbarui akun pengguna."""
     username = StringField('Username', validators=[DataRequired(), Length(min=3, max=64)])
     email = StringField('Email', validators=[DataRequired(), Email()])
     submit = SubmitField('Update Account')
@@ -101,7 +92,6 @@ class UpdateAccountForm(FlaskForm):
                 raise ValidationError('That email is taken. Please choose a different one.')
 
 class ChangePasswordForm(FlaskForm):
-    """Formulir untuk mengganti password."""
     current_password = PasswordField('Current Password', validators=[DataRequired()])
     new_password = PasswordField('New Password', validators=[DataRequired(), Length(min=6)])
     confirm_password = PasswordField('Confirm New Password', validators=[DataRequired(), EqualTo('new_password')])
