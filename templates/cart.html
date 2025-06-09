@@ -12,7 +12,7 @@
                     <div class="card-body">
                         <div class="row align-items-center">
                             <div class="col-md-2">
-                                <img src="{{ url_for('static', filename=item.product.image_url) }}" class="img-fluid rounded" alt="{{ item.product.name }}">
+                            <img src="{{ item.product.image_url }}" class="img-fluid rounded" alt="{{ item.product.name }}">                            
                             </div>
                             <div class="col-md-4">
                                 <h5 class="mb-0">{{ item.product.name }}</h5>
