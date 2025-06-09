@@ -85,6 +85,6 @@ Ikuti langkah-langkah berikut untuk menjalankan proyek ini di lingkungan lokal A
 ├── config.py       \# Konfigurasi aplikasi  
 └── requirements.txt \# Daftar dependencies
 
-## **📄 Lisensi**
+## **📄**
 
-Proyek ini dilisensikan di bawah Lisensi MIT. Lihat file LICENSE untuk detailnya.
+Proyek ini dikerjakan untuk memenuhi tugas mata kuliah Struktur Data.
