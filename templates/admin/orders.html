@@ -35,7 +35,6 @@
                             <span class="badge bg-{{ status_color.get(order.status, 'secondary') }}">{{ order.status }}</span>
                         </td>
                         <td>
-                            <!-- Form untuk update status -->
                             <form action="{{ url_for('update_order_status', order_id=order.id) }}" method="POST" class="d-inline-flex">
                                 <select name="status" class="form-select form-select-sm" style="width: 120px;">
                                     <option value="Pending" {% if order.status == 'Pending' %}selected{% endif %}>Pending</option>

@@ -54,7 +54,6 @@
                 {% if products.items %}
                     {% for product in products.items %}
                         <div class="col">
-                            <!-- ===== KODE KARTU PRODUK DITEMPEL LANGSUNG DI SINI ===== -->
                             <div class="card h-100 product-card shadow-sm border-0">
                                 <a href="{{ url_for('product_detail', product_id=product.id) }}">
                                 <img src="{{ product.image_url }}" class="card-img-top product-card-img" alt="{{ product.name }}" onerror="this.onerror=null;this.src='https://placehold.co/400x400/EAEAEA/333333?text=Image+Not+Found';">                                
@@ -81,9 +80,7 @@
                                         </button>
                                     </form>
                                 </div>
-                                <!-- Overlay sengaja dihilangkan untuk saat ini -->
                             </div>
-                            <!-- ===== AKHIR KODE YANG DITEMPEL ===== -->
                         </div>
                     {% endfor %}
                 {% else %}

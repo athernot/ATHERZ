@@ -40,14 +40,12 @@
                 </button>
             </form>
 
-            <!-- ===== PENAMBAHAN: TOMBOL SHARE MEDIA SOSIAL ===== -->
             <div class="mt-4">
                 <strong class="me-2">Share this product:</strong>
                 <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.url }}" target="_blank" class="btn btn-outline-secondary btn-sm" title="Share on Facebook"><i class="bi bi-facebook"></i></a>
                 <a href="https://twitter.com/intent/tweet?url={{ request.url }}&text=Check out this awesome product: {{ product.name|urlencode }}" target="_blank" class="btn btn-outline-secondary btn-sm" title="Share on Twitter"><i class="bi bi-twitter-x"></i></a>
                 <a href="https://api.whatsapp.com/send?text=Check out this awesome product: {{ product.name|urlencode }} {{ request.url }}" target="_blank" class="btn btn-outline-secondary btn-sm" title="Share on WhatsApp"><i class="bi bi-whatsapp"></i></a>
             </div>
-            <!-- ===== AKHIR PENAMBAHAN ===== -->
         </div>
     </div>
 

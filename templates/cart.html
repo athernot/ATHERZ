@@ -22,7 +22,6 @@
                                 <p class="mb-0">Rp {{ "%.2f"|format(item.product.price) }}</p>
                             </div>
                             <div class="col-md-2">
-                                <!-- Form untuk update kuantitas -->
                                 <form action="{{ url_for('update_cart', item_id=item.item_id) }}" method="POST" class="d-flex">
                                     <input type="number" name="quantity" class="form-control form-control-sm" value="{{ item.quantity }}" min="1" max="{{ item.product.stock }}">
                                     <button type="submit" class="btn btn-outline-secondary btn-sm ms-2"><i class="bi bi-arrow-repeat"></i></button>
